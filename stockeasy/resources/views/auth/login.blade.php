@@ -63,7 +63,7 @@
         <div class="container d-flex justify-content-center align-items-center vh-100">
             <div class="card shadow-lg p-4" style="width: 100%; max-width: 400px; border-radius: 20px">
                 <div class="text-center mb-3">
-                    <img src="{{ asset('storage/img.png') }}" alt="Logo StockEase" class="img-fluid mb-3" style="width: 80px" />
+
                 </div>
 
                 <h1 class="text-center mb-4">StockEase</h1>

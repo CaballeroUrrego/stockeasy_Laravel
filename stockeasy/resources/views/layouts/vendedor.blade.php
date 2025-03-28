@@ -3,36 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StockEasy</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <title>Vendedor - StockEasy</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* 🔹 Estilos generales */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 🔹 Navbar (visible en móviles) */
+        .navbar {
+            background-color: #6f42c1;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        /* 🔹 Botón del menú hamburguesa */
+        .navbar-toggler {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* 🔹 Sidebar */
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background-color: #6f42c1;
+            position: fixed;
+            top: 0;
+            left: -250px;
+            padding-top: 70px;
+            z-index: 999;
+            transition: left 0.3s;
+        }
+
+        .sidebar.show {
+            left: 0;
+        }
+
+        .sidebar h4 {
+            color: white;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .sidebar .nav-link {
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .sidebar .nav-link:hover {
+            background-color: #495057;
+            border-radius: 5px;
+        }
+
+        /* 🔹 Contenido Principal */
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+            padding-top: 70px;
+            transition: margin-left 0.3s;
+            width: calc(100% - 250px);
+        }
+
+        /* 🔹 Responsividad */
+        @media (max-width: 768px) {
+            .sidebar {
+                left: -250px;
+            }
+
+            .sidebar.show {
+                left: 0;
+            }
+
+            .content {
+                margin-left: 0;
+                width: 100%;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .navbar {
+                display: none; /* Ocultar navbar en escritorio */
+            }
+
+            .sidebar {
+                left: 0; /* Sidebar siempre visible en escritorio */
+            }
+
+            .content {
+                margin-left: 250px;
+                width: calc(100% - 250px);
+            }
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">StockEasy - Vendedor</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item"><a class="nav-link" href="{{ route('vendedor.dashboard') }}">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('vendedor.inventario') }}">Inventario</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('vendedor.ventas.create') }}">vender</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('vendedor.ventas') }}">ventas</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Reportes</a></li>
-                </ul>
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit" class="btn btn-danger">Cerrar Sesión</button>
-                </form>
-            </div>
-        </div>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <button class="navbar-toggler" id="menu-toggle">&#9776;</button>
+        <a class="navbar-brand text-white" href="{{ route('vendedor.dashboard') }}">StockEasy - Vendedor</a>
     </nav>
-    
-    <div class="container mt-4">
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <h4>Menú</h4>
+        <a href="{{ route('vendedor.dashboard') }}" class="nav-link">Inicio</a>
+        <a href="{{ route('vendedor.inventario') }}" class="nav-link">Inventario</a>
+        <a href="{{ route('vendedor.ventas.create') }}" class="nav-link">Vender</a>
+        <a href="{{ route('vendedor.ventas') }}" class="nav-link">Ventas</a>
+        <a href="{{ route('logout') }}" class="nav-link"
+           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar Sesión</a>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
+    </div>
+
+    <!-- Contenido Principal -->
+    <div class="content">
+        <div class="logo-container">
+            <img src="{{ asset('logo.png') }}" alt="Logo" class="logo-inventario">
+        </div>
         @yield('content')
     </div>
-    
+
+    <script>
+        document.getElementById("menu-toggle").addEventListener("click", function() {
+            document.getElementById("sidebar").classList.toggle("show");
+        });
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
