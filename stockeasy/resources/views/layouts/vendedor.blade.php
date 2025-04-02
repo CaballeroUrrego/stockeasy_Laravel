@@ -137,7 +137,9 @@
     <!-- Contenido Principal -->
     <div class="content">
         <div class="logo-container">
-            <img src="{{ asset('logo.png') }}" alt="Logo" class="logo-inventario">
+            <div class="text-center mb-4">
+                <img src="{{ asset('storage/LogoStockEase.svg') }}" alt="Logo StockEase" style="max-width: 150px; height: auto;">
+            </div>
         </div>
         @yield('content')
     </div>
