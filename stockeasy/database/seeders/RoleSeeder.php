@@ -7,11 +7,15 @@ use App\Models\Role;
 
 class RoleSeeder extends Seeder
 {
-    public function run()
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
     {
         Role::insert([
-            ['nombre' => 'admin'],
-            ['nombre' => 'vendedor'],
+            ['nombre' => 'Administrador'],
+            ['nombre' => 'Usuario'],
+            ['nombre' => 'Invitado'],
         ]);
     }
 }
